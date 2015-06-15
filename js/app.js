@@ -189,15 +189,17 @@ myApp.config(['$routeProvider', function($routeProvider){
 		templateUrl: 'partials/videoDetails.html',
 		controller: 'videoController'
 	}).
-	when('/customrcsearch',{
-		templateUrl: 'partials/customrcsearch.html',
-		controller: 'searchController'
-	})
-	 .
-	
-	  otherwise({
-	  	redirectTo: '/rcplanes'
-	  });
+    when('/customrcsearch/:q',{
+        templateUrl: 'partials/customrcsearch.html',
+        controller: 'SearchController'
+    }).
+    when('/customrcsearch',{
+        templateUrl: 'partials/customrcsearch.html',
+        controller: 'SearchController'
+    }).
+	otherwise({
+	  redirectTo: '/rcplanes'
+	});
 }]);
 
 

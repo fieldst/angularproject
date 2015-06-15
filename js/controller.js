@@ -1,5 +1,3 @@
-
-
 myApp.controller('MyController', function MyController($scope) {
   $scope.siteinfo = [
   {

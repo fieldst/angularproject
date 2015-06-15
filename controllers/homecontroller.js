@@ -4,14 +4,9 @@ var artistControllers = angular.module('artistControllers',[]);
 // Gather Images
 
 artistControllers.controller('ListController',['$scope', '$http', function($scope, $http){
-	// $scope.$emit('LOAD')
 	$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=rc+plane+&type=video&key=AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ')
 	.success(function(data){
-		
 		$scope.youtube = data;
-		// $scope.$emit('UNLOAD')
-		// $scope.$on('LOAD', function(){$scope.loading=true});
-		// $scope.$on('UNLOAD', function(){$scope.loading=false});
 	});
 }]);
 
