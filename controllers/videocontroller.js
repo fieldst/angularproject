@@ -40,6 +40,54 @@ artistControllers.controller('ListController',['$scope', '$http', function($scop
 	$scope.loadData();
 }]);
 
+artistControllers.controller('SearchController',['$scope', '$http', '$routeParams', '$route', function($scope, $http, $routeParams, $route){
+	$scope.youtube = {};
+	$scope.isLeoading = false;
+
+	$scope.loadData = function(pageToken){
+		var url = '';
+
+		if (pageToken){
+			url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&pageToken=' + pageToken + '&order=date&maxResults=50&q=' + $routeParams.q + '&type=video&key=AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ';
+		} else {
+			url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&maxResults=50&q=' + $routeParams.q + '&type=video&key=AIzaSyBKMRMYEiUIePp2IKzBNgCaxVLgFhjMSlQ';
+		}
+
+		$scope.isLoading = true;
+
+		$http.get(url).success(function(data){
+			if ($scope.youtube.items){
+				for(var i=0; i<data.items.length; i++){
+					$scope.youtube.items.push(data.items[i]);
+				}
+			} else {
+				$scope.youtube = data;
+			}
+
+			$scope.prevPageToken = data.prevPageToken || '';
+			$scope.nextPageToken = data.nextPageToken || '';
+
+			$scope.isLoading = false;
+		});
+	};
+
+	$scope.loadMore = function(){
+		$scope.loadData($scope.nextPageToken);
+	};
+
+	$scope.search = function(){
+		var q = $('#q').val();
+
+		$route.updateParams({
+			q: q
+		});
+	};
+
+	if ($routeParams.q){
+		$scope.loadData();
+	}
+}]);
+
 
 artistControllers.controller('ListController_two',['$scope', '$http', 'pagination', function($scope, $http, pagination){
 	$scope.youtube_all = [];
